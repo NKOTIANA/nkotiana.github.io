@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NKOTIANA's Groupie Blog</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Permanent+Marker&display=swap" rel="stylesheet" />
   <style>
     /* Reset */
     * {
@@ -79,16 +79,96 @@
       box-shadow: 2px 2px 10px rgba(56,40,44,0.1);
     }
 
-    /* Placeholder */
-    .no-posts {
+    /* Blog posts */
+    .post {
       background-color: #fff7e2;
-      padding: 2rem;
-      border: 2px dashed #a85c44;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
       border-radius: 10px;
-      text-align: center;
-      font-size: 1.2rem;
+      box-shadow: 2px 2px 8px rgba(56, 40, 44, 0.1);
+    }
+
+    .post h2 {
+      color: #a85c44;
+      margin-bottom: 0.5rem;
+    }
+
+    .post p em {
+      color: #de8855;
+      font-size: 0.9rem;
+    }
+
+    /* Comment Section */
+    #comments-section {
+      background-color: #fff7e2;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(56, 40, 44, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    #comments-section h3 {
+      color: #a85c44;
+      margin-bottom: 1rem;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: bold;
+    }
+
+    form input[type="text"],
+    form textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 2px solid #a85c44;
+      border-radius: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 1rem;
+      resize: vertical;
+    }
+
+    form button {
+      background-color: #a85c44;
+      color: #ffecc1;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    form button:hover {
+      background-color: #de8855;
+    }
+
+    /* Comments List */
+    #comments-list {
+      margin-top: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+      border-top: 1px solid #a85c44;
+      padding-top: 1rem;
+    }
+
+    .comment {
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #a85c44;
+    }
+
+    .comment .comment-name {
+      font-weight: bold;
       color: #38282c;
-      font-style: italic;
+      margin-bottom: 0.3rem;
+    }
+
+    .comment .comment-text {
+      white-space: pre-wrap;
+      color: #38282c;
     }
 
     /* Sidebar */
@@ -151,9 +231,36 @@
 
   <div class="container">
     <main class="main">
-      <div class="no-posts">
-        ✨ No blog posts yet! NKOTIANA is tuning up the gossip machine. Check back soon for backstage scoop, 90s memories, and fan-fueled fabulousness.
-      </div>
+      <!-- Blog post 1 -->
+      <article class="post">
+        <h2>My First NKOTB Concert Experience</h2>
+        <p><em>Posted on May 30, 2025</em></p>
+        <p>I still remember the excitement walking into the arena. The lights dimmed, the music started, and the crowd erupted. The energy was electric — truly unforgettable!</p>
+      </article>
+
+      <!-- Blog post 2 -->
+      <article class="post">
+        <h2>Top 5 Favorite NKOTB Songs</h2>
+        <p><em>Posted on May 20, 2025</em></p>
+        <p>Here’s my countdown of the best New Kids tunes that always get me singing along: 1) "Step by Step," 2) "You Got It (The Right Stuff)," 3) "Hangin’ Tough," 4) "Please Don’t Go Girl," and 5) "Cover Girl."</p>
+      </article>
+
+      <!-- Comments Section -->
+      <section id="comments-section">
+        <h3>Comments</h3>
+        <form id="comment-form">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required />
+          
+          <label for="comment">Comment:</label>
+          <textarea id="comment" name="comment" rows="4" placeholder="Write your opinion here..." required></textarea>
+          
+          <button type="submit">Post Comment</button>
+        </form>
+        <div id="comments-list">
+          <!-- Comments will appear here -->
+        </div>
+      </section>
     </main>
 
     <aside class="sidebar">
@@ -175,6 +282,43 @@
   <footer>
     &copy; 2025 NKOTIANA. All rights reserved. Site powered by glam, gossip, and good vibes.
   </footer>
+
+  <script>
+    // Handle comment form submission
+    const form = document.getElementById('comment-form');
+    const commentsList = document.getElementById('comments-list');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name = form.name.value.trim();
+      const comment = form.comment.value.trim();
+
+      if (name && comment) {
+        // Create new comment div
+        const commentDiv = document.createElement('div');
+        commentDiv.classList.add('comment');
+
+        const nameElem = document.createElement('div');
+        nameElem.classList.add('comment-name');
+        nameElem.textContent = name;
+
+        const commentElem = document.createElement('div');
+        commentElem.classList.add('comment-text');
+        commentElem.textContent = comment;
+
+        commentDiv.appendChild(nameElem);
+        commentDiv.appendChild(commentElem);
+
+        // Add comment to list
+        commentsList.appendChild(commentDiv);
+
+        // Clear form fields
+        form.name.value = '';
+        form.comment.value = '';
+      }
+    });
+  </script>
 
 </body>
 </html>
